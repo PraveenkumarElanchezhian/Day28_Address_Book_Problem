@@ -1,5 +1,7 @@
 package CollectionPracticeProblem;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -166,6 +168,41 @@ public class AddressBook {
 		}
 	}
 
+	private void IO_File() throws IOException {
+		FileWriter csvWriter = new FileWriter("addressBook.csv");
+		csvWriter.append("firstName");
+		csvWriter.append(",");
+		csvWriter.append("lastName");
+		csvWriter.append(",");
+		csvWriter.append("address");
+		csvWriter.append(",");
+		csvWriter.append("city");
+		csvWriter.append(",");
+		csvWriter.append("state");
+		csvWriter.append(",");
+		csvWriter.append("Zip Code");
+		csvWriter.append(",");
+		csvWriter.append("Phone no");
+		csvWriter.append(",");
+		csvWriter.append("email-ID");
+		csvWriter.append("\n");
+		for (AddressBookContact rowData : list) {
+			csvWriter.append(String.join(",",
+					rowData.getFirstName() 
+					+ "," + rowData.getLastName()
+					+ "," + rowData.getAddress() 
+					+ "," + rowData.getCity() 
+					+ "," + rowData.getState()
+					+ "," + rowData.getZip() 
+					+ "," + rowData.getPhoneNumber() 
+					+ "," + rowData.getEmail()));
+			csvWriter.append("\n");
+		}
+
+		csvWriter.flush();
+		csvWriter.close();
+	}
+
 	public static void main(String[] args) {
 
 		Scanner userInput = new Scanner(System.in);
@@ -232,10 +269,16 @@ public class AddressBook {
 			System.out.println("3) AddressBook 3");
 			System.out.println("0) Exit");
 			AddressBook myobj = new AddressBook();
-			myobj.viewPersons();
-			myobj.viewPersonsContactNumber();
-			myobj.viewAddressBook_by_PersonsName();
-			myobj.viewAddressBook_by_City_Sate();
+//			myobj.viewPersons();
+//			myobj.viewPersonsContactNumber();
+//			myobj.viewAddressBook_by_PersonsName();
+//			myobj.viewAddressBook_by_City_Sate();
+			try {
+				myobj.IO_File();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			chooseAddressBook = userInput.nextInt();
 
 		}
