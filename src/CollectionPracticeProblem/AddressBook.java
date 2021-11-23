@@ -2,9 +2,11 @@ package CollectionPracticeProblem;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import javax.swing.text.html.parser.Element;
 
@@ -30,6 +32,7 @@ public class AddressBook {
 		long phoneNumber = userInput.nextLong();
 		System.out.println("Enter the Email => ");
 		String email = userInput.nextLine();
+		email = userInput.nextLine();
 		AddressBookContact details = new AddressBookContact(firstName, lastName, address, city, state, zip, phoneNumber,
 				email);
 		list.add(details);
@@ -122,15 +125,44 @@ public class AddressBook {
 	private void viewPersons() {
 		Collections.sort(list, (o1, o2) -> (o1.getState().compareTo(o2.getState())));
 		for (AddressBookContact search : list) {
-			System.out.println("The person name is " + search.getFirstName()+" from " + search.getState() + " State");
+			System.out.println("The person name is " + search.getFirstName() + " from " + search.getState() + " State");
 		}
-	}	
+	}
+
 // View persons contact number by state wise ::
 	private void viewPersonsContactNumber() {
 		Collections.sort(list, (o1, o2) -> (o1.getState().compareTo(o2.getState())));
 		for (AddressBookContact search : list) {
 			System.out.println(" ");
-			System.out.println("Person name :: " + search.getFirstName() +"|| Phone no :: "+search.getPhoneNumber() +"|| State :: " + search.getState());
+			System.out.println("Person name :: " + search.getFirstName() + "|| Phone no :: " + search.getPhoneNumber()
+					+ "|| State :: " + search.getState());
+		}
+	}
+
+// View Address book by persons name ::
+	private void viewAddressBook_by_PersonsName() {
+		Collections.sort(list, (o1, o2) -> (o1.getFirstName().compareTo(o2.getFirstName())));
+		for (AddressBookContact search : list) {
+			System.out.println(" ");
+			System.out.println("|| lastName :: " + search.getLastName() + "|| Address :: " + search.getAddress()
+					+ "|| City :: " + search.getCity() + "|| State :: " + search.getState() + "|| zipcode :: "
+					+ search.getZip() + "|| Phone no :: " + search.getPhoneNumber() + "|| email-ID :: "
+					+ search.getEmail() + "Person name :: " + search.getFirstName());
+		}
+	}
+
+// View Address book by by City,State or Zip ::
+	private void viewAddressBook_by_City_Sate() {
+		Comparator<AddressBookContact> compareByCitySate = Comparator.comparing(AddressBookContact::getCity)
+				.thenComparing(AddressBookContact::getState);
+
+		List<AddressBookContact> sortedviewAddressBook_by_City_Sate = list.stream().sorted(compareByCitySate)
+				.collect(Collectors.toList());
+		for (AddressBookContact result : list) {
+			System.out.println("|| FirstName :: " + result.getFirstName() + "|| lastName :: " + " "
+					+ result.getLastName() + "|| Address :: " + result.getAddress() + "|| zipcode :: " + result.getZip()
+					+ "|| Phone no :: " + result.getPhoneNumber() + "|| email-ID :: " + result.getEmail()
+					+ "|| City :: " + result.getCity() + "|| State :: " + result.getState());
 		}
 	}
 
@@ -202,6 +234,8 @@ public class AddressBook {
 			AddressBook myobj = new AddressBook();
 			myobj.viewPersons();
 			myobj.viewPersonsContactNumber();
+			myobj.viewAddressBook_by_PersonsName();
+			myobj.viewAddressBook_by_City_Sate();
 			chooseAddressBook = userInput.nextInt();
 
 		}
