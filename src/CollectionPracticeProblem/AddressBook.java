@@ -269,14 +269,13 @@ public class AddressBook {
 			System.out.println("3) AddressBook 3");
 			System.out.println("0) Exit");
 			AddressBook myobj = new AddressBook();
-//			myobj.viewPersons();
-//			myobj.viewPersonsContactNumber();
-//			myobj.viewAddressBook_by_PersonsName();
-//			myobj.viewAddressBook_by_City_Sate();
+			myobj.viewPersons();
+			myobj.viewPersonsContactNumber();
+			myobj.viewAddressBook_by_PersonsName();
+			myobj.viewAddressBook_by_City_Sate();
 			try {
 				myobj.IO_File();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			chooseAddressBook = userInput.nextInt();
