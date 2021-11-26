@@ -1,5 +1,7 @@
 package CollectionPracticeProblem;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -168,6 +170,7 @@ public class AddressBook {
 		}
 	}
 
+//Read/Write Address Book with Persons Contact as CSV File ::
 	private void IO_File() throws IOException {
 		FileWriter csvWriter = new FileWriter("addressBook.csv");
 		csvWriter.append("firstName");
@@ -188,19 +191,29 @@ public class AddressBook {
 		csvWriter.append("\n");
 		for (AddressBookContact rowData : list) {
 			csvWriter.append(String.join(",",
-					rowData.getFirstName() 
-					+ "," + rowData.getLastName()
-					+ "," + rowData.getAddress() 
-					+ "," + rowData.getCity() 
-					+ "," + rowData.getState()
-					+ "," + rowData.getZip() 
-					+ "," + rowData.getPhoneNumber() 
-					+ "," + rowData.getEmail()));
+					rowData.getFirstName() + "," + rowData.getLastName() + "," + rowData.getAddress() + ","
+							+ rowData.getCity() + "," + rowData.getState() + "," + rowData.getZip() + ","
+							+ rowData.getPhoneNumber() + "," + rowData.getEmail()));
 			csvWriter.append("\n");
 		}
 
 		csvWriter.flush();
 		csvWriter.close();
+	}
+
+//Read/Write Address Book with Persons Contact as JSON File ::
+	public void JSON_File() throws FileNotFoundException {
+		List<List<String>> input = new ArrayList<List<String>>();
+		Scanner userInput = new Scanner(new File("addressBook.csv"));
+		while (userInput.hasNextLine()) {
+			Scanner lineSc = new Scanner(userInput.nextLine()).useDelimiter("\t");
+			List<String> line = new ArrayList<String>();
+			while (lineSc.hasNext()) {
+				line.add(lineSc.next());
+			}
+			input.add(line);
+		}
+		System.out.println(input);
 	}
 
 	public static void main(String[] args) {
@@ -273,11 +286,19 @@ public class AddressBook {
 			myobj.viewPersonsContactNumber();
 			myobj.viewAddressBook_by_PersonsName();
 			myobj.viewAddressBook_by_City_Sate();
+      
 			try {
 				myobj.IO_File();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+      
+			try {
+				myobj.JSON_File();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+      
 			chooseAddressBook = userInput.nextInt();
 
 		}
