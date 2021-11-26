@@ -286,16 +286,19 @@ public class AddressBook {
 			myobj.viewPersonsContactNumber();
 			myobj.viewAddressBook_by_PersonsName();
 			myobj.viewAddressBook_by_City_Sate();
+      
 			try {
 				myobj.IO_File();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+      
 			try {
 				myobj.JSON_File();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
+      
 			chooseAddressBook = userInput.nextInt();
 
 		}
